@@ -1,58 +1,55 @@
-import React from "react";
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import type { TooltipProps } from "recharts";
+'use client';
+import React from 'react';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
-const COLORS: Record<string, string> = {
-  "left": "#3B82F6",
-  "left-center": "#14B8A6",
-  "center": "#10B981",
-  "right-center": "#8B5CF6",
-  "right": "#EF4444",
-};
+interface BiasPieChartProps {
+  data: Record<string, number>;
+  height?: number;
+}
 
-const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
-  if (active && payload && payload.length) {
-    const { name, value } = payload[0];
-    return (
-      <div className="bg-white p-2 rounded shadow text-sm">
-        <p><strong>{name}</strong>: {value?.toFixed(2)}%</p>
-      </div>
-    );
-  }
-  return null;
-};
+// Color palette: Neon Green, White, Dark Green, Light Green, Black
+const COLORS = [
+  '#22c55e', // Neon Green
+  '#ffffff', // White
+  '#14532d', // Dark Green
+  '#86efac', // Light Green
+  '#000000', // Black
+];
 
-
-
-export default function BiasPieChart({ data }: { data: Record<string, number> }) {
-  const chartData = Object.entries(data).map(([key, value]) => ({
-    name: key,
+const BiasPieChart: React.FC<BiasPieChartProps> = ({ data, height = 300 }) => {
+  const chartData = Object.entries(data).map(([name, value]) => ({
+    name,
     value,
   }));
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" height={height}>
       <PieChart>
         <Pie
           data={chartData}
           cx="50%"
           cy="50%"
           labelLine={false}
-          outerRadius={120}
+          outerRadius={(height / 2) - 20}
           fill="#8884d8"
           dataKey="value"
-          nameKey="name"
+          stroke="#22c55e" // Green border ensures black slices are visible
+          strokeWidth={1}
         >
           {chartData.map((entry, index) => (
-            <Cell
-              key={`cell-${index}`}
-              fill={COLORS[entry.name.toLowerCase()] || "#E5E7EB"} // default gray
-            />
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
-        <Tooltip content={<CustomTooltip />} />
-        <Legend />
+        <Tooltip 
+          contentStyle={{ backgroundColor: '#000000', borderColor: '#22c55e', color: '#22c55e' }}
+          itemStyle={{ color: '#22c55e' }}
+        />
+        <Legend 
+          wrapperStyle={{ color: '#22c55e' }} // Sets text color for legend items
+        />
       </PieChart>
     </ResponsiveContainer>
   );
-}
+};
+
+export default BiasPieChart;

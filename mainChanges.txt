@@ -1,0 +1,6 @@
+## Backend Changes
+- Fixed Wayback Machine integration by correctly parsing the API response structure.
+- Optimized performance by limiting historical date checks to the top 5 results.
+
+## Frontend Changes
+- No changes made to the frontend in this update.

@@ -1,262 +1,474 @@
-"use client";
-import Image from "next/image";
-import { useState } from "react";
-import BiasPieChart from "./biasPieChart";
-import SourceList from "./sourceList";
-import React from "react";
+'use client';
+import { useState, useEffect, useRef, use } from 'react';
+import BiasPieChart from './biasPieChart';
+import SourceList from './sourceList';
+import SkeletonLoader from './components/SkeletonLoader';
+import TopBar from './components/TopBar';
+import { APIResult } from './types';
+import logo from './Logo3.png';
+
+// Helper function to format bytes into a readable string (KB, MB, etc.)
+function formatBytes(bytes: number, decimals = 2) {
+  if (bytes === 0) return '0 Bytes';
+  if (!bytes) return 'No Data Found';
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+// Helper function to get the earliest date from multiple sources
+function getEarliestDate(serpDateStr?: string, exifDateStr?: string): string {
+  const dates: Date[] = [];
+
+  // Parse SERP date (e.g., "2023-01-15")
+  if (serpDateStr) {
+    const date = new Date(serpDateStr);
+    if (!isNaN(date.getTime())) {
+      dates.push(date);
+    }
+  }
+
+  // Parse EXIF date (e.g., "2023:01:15 10:30:00")
+  if (exifDateStr) {
+    const formattedExifDate = exifDateStr.replace(/(\d{4}):(\d{2}):(\d{2})/, '$1-$2-$3');
+    const date = new Date(formattedExifDate);
+    if (!isNaN(date.getTime())) {
+      dates.push(date);
+    }
+  }
+
+  if (dates.length === 0) return '--';
+
+  const earliest = new Date(Math.min.apply(null, dates.map(d => d.getTime())));
+  
+  return earliest.toLocaleDateString('en-CA'); // YYYY-MM-DD format
+}
+
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
-  const [result, setResult] = useState<any | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [biasPercentages, setBiasPercentages] = useState<Record<string, number>>({});
-  const [sourceList, setSourceList] = useState<Record<string, { url: string; summary: string }[]>>({});
-  const [imageDescription, setImageDescription] = useState<any | null>(null);
-  const [earliestDate, setEarliestDate] = useState<string | null>(null);
-  // ✅ Enable mock mode for testing without uploading
-  const MOCK_MODE = false;
-  const mocksourceList = {
-    "bbc.com": [
-      "https://bbc.com/news/article1",
-      "https://bbc.com/news/article2"
-    ],
-    "cnn.com": [
-      "https://cnn.com/story1"
-    ],
-    "aljazeera.com": [
-      "https://www.aljazeera.com/news/2024/04/20/special-report-photo",
-      "https://www.aljazeera.com/news/2024/05/02/image-analysis"
-    ]
-  };
+  const [isLoading, setIsLoading] = useState(false);
+  const [result, setResult] = useState<APIResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [showTopBar, setShowTopBar] = useState(true);
+  
+  // New state for description toggle
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  
+  // Ref for hidden file input
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const mockBiasPercentages = {
-    "left": 20,
-    "left-center": 10,
-    "center": 35,
-    "right-center": 15,
-    "right": 20
-  };
-  const mock_Description = `Response from Gemini:
+  useEffect(() => {
+    if (!result) return;
 
-Here’s a concise description of the image:
+    let lastScrollY = window.scrollY;
 
-A close-up, high-quality reproduction of Leonardo da Vinci’s “Mona Lisa.”  
-• The sitter is shown seated, hands gently clasped, dark hair framing her face and the famous enigmatic smile intact.  
-• Muted earth-tone palette—browns, greens, and soft blues—renders the receding landscape behind her.  
+    const handleScroll = () => {
+      if (window.scrollY > lastScrollY && window.scrollY > 100) {
+        setShowTopBar(false);
+      } else {
+        setShowTopBar(true);
+      }
+      lastScrollY = window.scrollY;
+    };
 
-The painting is housed in an ornate, gold-colored baroque/rococo frame with intricate carvings and an antique patina.  
-Even, diffuse lighting eliminates harsh shadows, so both the artwork and frame details are clearly visible.`;
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [result]);
 
-  const mockResult = {
-    image_url: "/example.png",
-    total_matches: 5,
-    summary: "This image has appeared on multiple news sites and may have been altered.",
-    bias_percentages: {
-      left: 25,
-      center: 50,
-      right: 25,
-    },
-    knowledge_graph: {
-      title: "Naturalism in Art",
-      type: "Art Movement",
-      description: "Naturalism is a style and theory of representation based on the accurate depiction of detail.",
-      image_subject: "A painting showing realistic depiction of rural life, in 19th century style.",
-      usage_context: "Used in articles discussing Renaissance and Naturalistic movements in art.",
-      source_summary: "Referenced in educational resources and historical art sites.",
-      likely_origin: "19th century Europe, likely France or Italy.",
-      location_guess: "Europe",
-      additional_notes: "The image is often used in classrooms and artistic discussions about realism vs romanticism."
+  const handleFileChange = (selectedFile: File | null) => {
+    if (selectedFile) {
+      setFile(selectedFile);
+      handleUpload(selectedFile);
     }
   };
-  const mockDate = "2024-04-2012"; // Example date for the image
-  const mock_knowledge_graph = mockResult.knowledge_graph;
-  const mock_percentages = mockResult.bias_percentages;
-  const handleUpload = async (uploadFile: File) => {
+
+  const handleUpload = async (fileToUpload: File) => {
     setIsLoading(true);
+    setResult(null);
+    setError(null);
+    setIsDescriptionExpanded(false); // Reset description state
+
     const formData = new FormData();
-    formData.append("file", uploadFile);
+    formData.append('file', fileToUpload);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/search/image", {
-        method: "POST",
+      const response = await fetch('http://127.0.0.1:8000/search/image', {
+        method: 'POST',
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error("Failed to upload image");
+        const errData = await response.json();
+        throw new Error(errData.detail || 'An unknown error occurred');
       }
 
       const data = await response.json();
-      setIsLoading(false);
       setResult(data);
-      setBiasPercentages(data.biases);
-      setSourceList(data.source_clusters);
-      setImageDescription(data.image_description);
-      setEarliestDate(data.earliest_date);
-      // let sourceList = result.source_clusters;
-      // let knowledgeGraph = result.knowledge_graph;
-
-      console.log("Upload successful:", data);
-    } catch (error) {
-      console.error("Error uploading image:", error);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
-
   };
 
+  const handleReset = () => {
+    setFile(null);
+    setResult(null);
+    setError(null);
+  };
 
-  return (
-    <>
-      <div className="flex flex-col items-center min-h-screen bg-[#06132a] w-screen overflow-y-auto overflow-x-hidden">
-        {/* Header */}
-        <div className="flex flex-row p-4 w-full  border-gray-600 items-center justify-center">
-          <div className="flex flex-row items-center justify-center">
-            <Image
-              src="/alethia_white.png"
-              alt="Alethia Logo"
-              width={50}
-              height={50}
-              className="m-2 rounded-lg"
-            />
-            <h1 className="text-3xl font-lubrifont  text-white ">Alethia</h1>
+  const triggerFileUpload = () => {
+    fileInputRef.current?.click();
+  };
+
+  const renderUpload = () => (
+    <div className="w-full max-w-3xl mx-auto flex flex-col items-center justify-center p-8">
+      <div className="flex items-center justify-center mb-6">
+        <img src={logo.src} alt="Alethia" className="h-48 md:h-64 w-auto object-contain mix-blend-screen" />
+      </div>
+      <p className="text-lg text-green-600 text-center mb-8">Uncover the truth behind any image.</p>
+      <label
+        onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+        onDragLeave={() => setIsDragging(false)}
+        onDrop={(e) => {
+          e.preventDefault();
+          setIsDragging(false);
+          handleFileChange(e.dataTransfer.files?.[0] || null);
+        }}
+        className={`w-full h-64 flex flex-col items-center justify-center p-10 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-300 ${isDragging ? 'border-green-400 bg-gray-900' : 'border-green-600 hover:border-green-400'}`}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-green-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+        </svg>
+        <span className="text-green-400 font-medium">
+          {file ? file.name : 'Drag & drop an image or click to upload'}
+        </span>
+        <span className="text-sm text-green-600 mt-1">PNG, JPG, GIF up to 10MB</span>
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
+        />
+      </label>
+    </div>
+  );
+
+  const renderResults = () => {
+    if (!result) return null;
+
+    const {
+      image_description,
+      image_url,
+      biases = {},
+      source_clusters = {},
+      earliest_date,
+      total_matches,
+      exif_data = {},
+      ai_analysis = {}, 
+    } = result;
+
+    // --- 1. Derive Analysis Data (No useState needed) ---
+    
+    // Format Verdict
+    let formattedVerdict = "--";
+    if (ai_analysis.verdict === 'human') formattedVerdict = "Human";
+    else if (ai_analysis.verdict === 'ai_generated') formattedVerdict = "AI Generated";
+    else if (ai_analysis.verdict === 'deepfake') formattedVerdict = "Deepfake";
+    else if (ai_analysis.verdict) formattedVerdict = ai_analysis.verdict; // Fallback
+
+    // Calculate Percentages (0.0 - 1.0 -> 0 - 100)
+    const aiScore = (ai_analysis.ai_id_confidence || 0) * 100;
+    const humanScore = (ai_analysis.human_confidence || 0) * 100;
+    const deepfakeScore = (ai_analysis.deepfake_confidence || 0) * 100;
+    
+    // NSFW is boolean, so we handle it differently
+    const nsfwDetected = ai_analysis.nsfw_is_detected || false;
+
+    // Metadata (Prefer AI analysis data, fallback to EXIF)
+    const width = ai_analysis.meta_width || exif_data['Image Width'];
+    const height = ai_analysis.meta_height || exif_data['Image Height'];
+    const format = ai_analysis.meta_format || exif_data.Format;
+    const size = ai_analysis.meta_filesize || exif_data.Size;
+
+    // ----------------------------------------------------
+
+    const imageUrl = image_url.startsWith('http') ? image_url : `http://127.0.0.1:8000${image_url}`;
+    
+    const finalEarliestDate = getEarliestDate(earliest_date, exif_data['DateTime Original']);
+    const noData = 'No Data Found';
+
+    // Check for GPS coordinates
+    const gpsLocation = exif_data['GPS Location'];
+    const hasLocation = gpsLocation && gpsLocation !== 'N/A' && gpsLocation.trim() !== '';
+
+    return (
+      <div className="w-full max-w-7xl mx-auto p-4 md:p-8 grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-12 relative">
+        
+        {/* Hidden File Input for "New Upload" button */}
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          ref={fileInputRef}
+          onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
+        />
+
+        {/* Main Content Column */}
+        <div className="lg:col-span-2 flex flex-col space-y-8">
+          
+          {/* 1. Image Analysis Section */}
+          <section>
+            <h2 className="text-2xl font-bold text-green-400 mb-6">Image Analysis</h2>
+            <div className="flex flex-col md:flex-row gap-6 items-start">
+              <div className="flex-shrink-0 flex items-center justify-center rounded-md bg-black border border-green-500 p-2">
+                <img src={imageUrl} alt="Uploaded content" className="max-h-72 w-auto max-w-full sm:max-w-xs object-contain rounded" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-sm font-medium text-green-600 uppercase mb-2">Description</h3>
+                <div className="relative">
+                  <p className={`text-green-300 text-base leading-relaxed ${!isDescriptionExpanded ? 'line-clamp-6' : ''}`}>
+                    {image_description || "No description available."}
+                  </p>
+                  <button 
+                    onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
+                    className="text-green-500 hover:text-green-400 text-sm font-bold mt-2 focus:outline-none underline"
+                  >
+                    {isDescriptionExpanded ? 'Read Less' : 'Read More'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 2. Upload Button */}
+          <div className="flex justify-start">
+            <button
+              onClick={triggerFileUpload}
+              className="px-8 py-3 bg-green-600 hover:bg-green-500 text-black font-bold rounded shadow-lg transition-colors border border-green-400 w-full md:w-auto text-center"
+            >
+              Upload New Image
+            </button>
           </div>
 
+          {/* 3. Verification Report */}
+          <section className="bg-black border border-green-500 p-5 rounded-lg">
+              <h2 className="text-xl font-bold text-green-400 mb-4">Verification Report</h2>
+              <dl className="space-y-4">
+                  <div className="flex justify-between items-center border-b border-green-900/50 pb-2">
+                      <dt className="text-sm font-medium text-green-600">Total Matches</dt>
+                      <dd className="text-base text-green-300 font-mono">{total_matches || 0}</dd>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-green-900/50 py-2">
+                      <dt className="text-sm font-medium text-green-600">Earliest Date</dt>
+                      <dd className="text-base text-green-300 font-mono">{finalEarliestDate}</dd>
+                  </div>
+                  <div className="flex justify-between items-center pt-2">
+                      <dt className="text-sm font-medium text-green-600">AI or Not</dt>
+                      <dd className="text-base text-green-300 font-mono">{formattedVerdict}</dd>
+                  </div>
+              </dl>
+          </section>
+
+          {/* 4. EXIF Data */}
+          <section className="bg-black border border-green-500 p-5 rounded-lg">
+              <h2 className="text-xl font-bold text-green-400 mb-4">EXIF Data</h2>
+              <div className="space-y-3 text-sm">
+                  <div className="flex justify-between border-b border-green-900/50 pb-2">
+                      <span className="text-green-600">Device</span>
+                      <span className="text-green-300 font-mono">
+                        {exif_data.Make || exif_data.Model ? `${exif_data.Make || ''} ${exif_data.Model || ''}`.trim() : noData}
+                      </span>
+                  </div>
+                  <div className="flex justify-between border-b border-green-900/50 pb-2">
+                      <span className="text-green-600">Exposure</span>
+                      <span className="text-green-300 font-mono">{exif_data.Exposure || noData}</span>
+                  </div>
+                  <div className="flex justify-between border-b border-green-900/50 pb-2">
+                      <span className="text-green-600">Focal Length</span>
+                      <span className="text-green-300 font-mono">{exif_data['Focal Length'] ? `${exif_data['Focal Length']}mm` : noData}</span>
+                  </div>
+                  <div className="flex justify-between pt-1">
+                      <span className="text-green-600">ISO</span>
+                      <span className="text-green-300 font-mono">{exif_data.ISO || noData}</span>
+                  </div>
+              </div>
+          </section>
+
+          {/* 5. Map */}
+          <section className="bg-black border border-green-500 p-5 rounded-lg flex flex-col min-h-[300px]">
+              <h2 className="text-xl font-bold text-green-400 mb-4">Location</h2>
+              <div className="flex-1 bg-green-900/10 rounded border border-green-800/50 flex flex-col items-center justify-center relative overflow-hidden group">
+                  {hasLocation ? (
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      frameBorder="0"
+                      scrolling="no"
+                      marginHeight={0}
+                      marginWidth={0}
+                      title="Location Map"
+                      src={`https://maps.google.com/maps?q=${encodeURIComponent(gpsLocation)}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+                      className="absolute inset-0 w-full h-full opacity-90 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
+                    ></iframe>
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 opacity-20" 
+                           style={{ backgroundImage: 'radial-gradient(circle, #22c55e 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
+                      </div>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-green-600 mb-2 z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <span className="text-green-500 text-sm z-10">Map Data Unavailable</span>
+                    </>
+                  )}
+              </div>
+              <div className="mt-4 flex justify-between items-center text-sm">
+                  <span className="text-green-600">Coordinates</span>
+                  <span className="text-green-300 font-mono">{gpsLocation || noData}</span>
+              </div>
+          </section>
         </div>
 
-        {/* Main Upload Section */}
-        <div className="m-4 flex flex-col items-center w-full">
-
-
-          <div
-            onDragOver={(e) => {
-              e.preventDefault();
-              setIsDragging(true);
-            }}
-            onDragLeave={() => setIsDragging(false)}
-            onDrop={(e) => {
-              e.preventDefault();
-              setIsDragging(false);
-              const droppedFile = e.dataTransfer.files?.[0];
-              if (droppedFile) {
-                setFile(droppedFile);
-                handleUpload(droppedFile);
-              }
-            }}
-            className={`m-4 cursor-pointer text-white border ${isDragging ? "border-amber-500 bg-[#1f2632]" : "border-gray-600"} p-10  px-40 items-center justify-center flex flex-col hover:bg-amber-400 hover:text-black transition-colors duration-300 rounded-lg`}
-          >
-            <label className="flex flex-col items-center justify-center pointer-cursor">
-              {file ? (
-                <>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#10ec1fc4] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 2h9l6 6v14a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z" />
-                  </svg>
-                  <span className="mt-1 text-sm text-[#10ec1fc4] font-medium">{file.name}</span>
-                </>
+        {/* Sidebar */}
+        <div className="lg:col-span-1 space-y-8">
+          {/* --- Bias Section --- */}
+          <section>
+            <h2 className="text-2xl font-bold text-green-400 mb-4">Bias</h2>
+            <div className="bg-black border border-green-500 p-2 rounded-lg w-full overflow-hidden h-64 flex items-center justify-center">
+              {Object.keys(biases).length > 0 ? (
+                <BiasPieChart data={biases} height={240} />
               ) : (
-                <>
-                  <svg xmlns="http://www.w3.org/2000/svg" className=" cursor-pointer h-8 w-8 text-[#f3b530c4] mb-2" fill="currentColor" viewBox="0 0 640 512" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128l-368 0zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39L296 392c0 13.3 10.7 24 24 24s24-10.7 24-24l0-134.1 39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z" />
-                  </svg>
-                  <span className="text-white cursor-pointer">Click or Drag to Upload an Image</span>
-                </>
+                <div className="text-green-500/50 text-sm">No Bias Data Available</div>
               )}
-              <input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => {
-                  const selectedFile = e.target.files?.[0];
-                  if (selectedFile) {
-                    setFile(selectedFile);
-                    handleUpload(selectedFile);
-                  }
-                }}
-              />
-            </label>
-          </div>
+            </div>
+          </section>
 
-          {/* Result Section */}
-          {(MOCK_MODE ? mockResult : result) && (
-            <div className="flex flex-col m-6 p-6 rounded-lg bg-inherit shadow-md w-3/4 ">
+          {/* --- Sources Section --- */}
+          <section>
+            <h2 className="text-2xl font-bold text-green-400 mb-4">Sources</h2>
+            <div className="bg-black border border-green-500 p-4 rounded-lg max-h-80 overflow-y-auto custom-scrollbar">
+              {Object.keys(source_clusters).length > 0 ? (
+                <SourceList data={source_clusters} />
+              ) : (
+                <div className="text-green-500/50 text-sm text-center py-4">No Sources Found</div>
+              )}
+            </div>
+          </section>
 
-              <div className="flex flex-row justify-between m-2">
-
-                <div className="flex flex-col mt-6 p-4 rounded-lg border border-gray-600 w-1/2">
-
-                  <h1 className="text-lg text-white">Uploaded Iamge</h1>
-
-                  <div className="flex justify-center mb-4 mr-4">
-                    <img
-                      src={(MOCK_MODE ? mockResult : result).image_url}
-                      alt="Uploaded"
-                      className=" max-w-lg min-h-[350px] h-[400px] rounded-md border border-[#f3b530c4]"
-                    />
-
+          {/* --- AI or Not Breakdown Section --- */}
+          <section>
+            <h2 className="text-2xl font-bold text-green-400 mb-4">AI Breakdown</h2>
+            <div className="bg-black border border-green-500 p-4 rounded-lg space-y-6">
+              
+              {/* Bars Section */}
+              <div className="space-y-4">
+                {/* AI Generated */}
+                <div>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-green-600">AI Generated</span>
+                    <span className="text-green-300 font-mono">{aiScore.toFixed(1)}%</span>
                   </div>
-
+                  <div className="w-full bg-green-900/30 rounded-full h-2">
+                    <div 
+                      className="bg-green-400 h-2 rounded-full shadow-[0_0_8px_rgba(74,222,128,0.6)] transition-all duration-1000 ease-out" 
+                      style={{ width: `${aiScore}%` }}
+                    ></div>
+                  </div>
                 </div>
-                <div className="ml-4 w-1/2 min-h-[350px] h-[500px] p-4 bg-inherit rounded shadow mt-6 border border-gray-600">
-                  <BiasPieChart data={MOCK_MODE ? mockBiasPercentages : biasPercentages} />
+                
+                {/* Human */}
+                <div>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-green-600">Human</span>
+                    <span className="text-green-300 font-mono">{humanScore.toFixed(1)}%</span>
+                  </div>
+                  <div className="w-full bg-green-900/30 rounded-full h-2">
+                    <div 
+                      className="bg-green-400 h-2 rounded-full shadow-[0_0_8px_rgba(74,222,128,0.6)] transition-all duration-1000 ease-out" 
+                      style={{ width: `${humanScore}%` }}
+                    ></div>
+                  </div>
                 </div>
 
+                {/* Deepfake */}
+                <div>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-green-600">Deepfake</span>
+                    <span className="text-green-300 font-mono">{deepfakeScore.toFixed(1)}%</span>
+                  </div>
+                  <div className="w-full bg-green-900/30 rounded-full h-2">
+                    <div 
+                      className="bg-green-400 h-2 rounded-full shadow-[0_0_8px_rgba(74,222,128,0.6)] transition-all duration-1000 ease-out" 
+                      style={{ width: `${deepfakeScore}%` }}
+                    ></div>
+                  </div>
+                </div>
+
+                {/* NSFW */}
+                <div>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-green-600">NSFW</span>
+                    <span className={`font-mono ${nsfwDetected ? 'text-red-500' : 'text-green-300'}`}>
+                      {nsfwDetected ? 'DETECTED' : 'Not Detected'}
+                    </span>
+                  </div>
+                  <div className="w-full bg-green-900/30 rounded-full h-2">
+                    <div 
+                      className={`h-2 rounded-full shadow-[0_0_8px_rgba(74,222,128,0.6)] transition-all duration-1000 ease-out ${nsfwDetected ? 'bg-red-500' : 'bg-green-400'}`}
+                      style={{ width: nsfwDetected ? '100%' : '0%' }}
+                    ></div>
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col m-2 p-4 rounded-lg border border-gray-600">
 
-                <h1 className="text-lg text-white">Verification Report</h1>
-
-                <div className="flex flex-row justify-between m-2">
-
-                  <div className="flex flex-col w-1/3">
-
-                    <h1 className="text-lg text-white">Total Matches:</h1>
-
-                    <span className="text-white">
-                      {(MOCK_MODE ? mockResult : result).total_matches}
-                    </span>
-
-                    <h1 className="text-lg text-white">Earliest date of publication</h1>
-
-                    <span className="text-white">
-                      {(MOCK_MODE ? mockDate : earliestDate)}
-                    </span>
-
+              {/* Meta Section */}
+              <div className="border-t border-green-900/50 pt-4">
+                <h3 className="text-green-400 font-bold text-sm mb-3">Metadata</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-green-900/10 p-2 rounded border border-green-900/30">
+                    <span className="block text-green-600 text-xs uppercase tracking-wider">Width</span>
+                    <span className="block text-green-300 font-mono text-sm">{width ? `${width} px` : noData}</span>
                   </div>
-
-                  <div className="flex flex-col w-2/3  m-2 p-3">
-                    <h1 className="text-lg text-white mb-2 mt-0">
-                      Image Analysis:
-                    </h1>
-                    <span className="text-white">
-                      {(MOCK_MODE ? mock_Description : imageDescription)}
-                    </span>
+                  <div className="bg-green-900/10 p-2 rounded border border-green-900/30">
+                    <span className="block text-green-600 text-xs uppercase tracking-wider">Height</span>
+                    <span className="block text-green-300 font-mono text-sm">{height ? `${height} px` : noData}</span>
                   </div>
-
+                  <div className="bg-green-900/10 p-2 rounded border border-green-900/30">
+                    <span className="block text-green-600 text-xs uppercase tracking-wider">Format</span>
+                    <span className="block text-green-300 font-mono text-sm">{format || noData}</span>
+                  </div>
+                  <div className="bg-green-900/10 p-2 rounded border border-green-900/30">
+                    <span className="block text-green-600 text-xs uppercase tracking-wider">Size</span>
+                    <span className="block text-green-300 font-mono text-sm">{size ? formatBytes(size) : noData}</span>
+                  </div>
                 </div>
-
-              </div>
-              <div className="flex flex-col m-2 p-4 rounded-lg ">
-                <h1 className="text-lg text-white mb-2">Sources</h1>
-                <SourceList data={MOCK_MODE ? mocksourceList : sourceList} />
               </div>
 
             </div>
-          )}
+          </section>
         </div>
       </div>
+    );
+  }
 
-      {/* Loading Screen */}
-      {isLoading && (
-        <div className="fixed inset-0 bg-black/10 z-50 flex items-center justify-center">
-          <div className="flex flex-col items-center">
-            <img
-              src="/flame.png"
-              className="w-12 h-12 animate-bounce mt-[-2.5rem]"
-              alt="Torch flame"
-            />
-            <img src="/torch.png" className="w-24 h-24" alt="Torch base" />
-          </div>
-        </div>
-      )}
-    </>
+  return (
+    <main className="flex flex-col items-center justify-center min-h-screen p-4 pt-32 bg-black">
+      {result && <TopBar isVisible={showTopBar} onReset={handleReset} />}
+      {!result && !isLoading && renderUpload()}
+      {isLoading && <SkeletonLoader />}
+      {result && !isLoading && renderResults()}
+      {error && <div className="mt-4 text-red-500">Error: {error}</div>}
+    </main>
   );
 }

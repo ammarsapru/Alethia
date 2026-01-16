@@ -2,33 +2,62 @@
 # from urllib.parse import urlparse
 # import tldextract
 # import requests
+import time
+from datetime import datetime
 from .clean_dict import clean_dict
 from .earliestDate import earliestDate
 from .describe_image import describe_image
 from .wayback import get_earliest_snapshot
 from .bias import bias_split
-def handle_serp_response(data,image_path=None):
+# from getExif import get_exif_data
+
+def handle_serp_response(data, image_path=None):
     
-    image_links,bias_data,source_clusters = clean_dict(data)
+    image_links, bias_data, source_clusters = clean_dict(data)
     urlDate = []
     
-    for i in image_links:
+    print(f"Processing {len(image_links)} links. Checking Wayback for top 5...")
+
+    # Limit to top 5 links to prevent timeouts and excessive waiting
+    for i in image_links[:10]:
+        print(f"Checking Wayback for: {i}")
         result = get_earliest_snapshot(i)
-        if "error" not in result:
-            urlDate.append(result.get("formatted_date", "No date found"))
-        else:
-            urlDate.append(result["error"])
-    print(urlDate)
+        
+        # Parse the raw Wayback JSON response
+        # Expected structure: {'archived_snapshots': {'closest': {'timestamp': 'YYYYMMDDHHMMSS', ...}}}
+        date_found = "No date found"
+        if result and "archived_snapshots" in result:
+            snapshots = result["archived_snapshots"]
+            if "closest" in snapshots and snapshots["closest"].get("available"):
+                timestamp = snapshots["closest"].get("timestamp")
+                if timestamp:
+                    try:
+                        # Convert YYYYMMDDHHMMSS to YYYY-MM-DD
+                        dt_obj = datetime.strptime(timestamp, "%Y%m%d%H%M%S")
+                        date_found = dt_obj.strftime("%Y-%m-%d")
+                    except ValueError:
+                        pass
+        
+        urlDate.append(date_found)
+        # Add a 1-second delay to respect Wayback Machine's rate limits
+        time.sleep(1)
+    print("Dates found:", urlDate)
 
     # print(earliestDate(urlDate))
     biases = bias_split(bias_data)
     earliest_date = earliestDate(urlDate)
     image_description = describe_image(image_path) if image_path else None
+
+    # Calculate total matches: use SERP total if available, else fallback to link count
+    serp_total = data.get("search_information", {}).get("total_results", 0)
+    total_matches = serp_total if serp_total > 0 else len(image_links)
+
     return {
         "biases": biases,
         "earliest_date": earliest_date,
         "image_description": image_description,
-        "source_clusters": source_clusters
+        "source_clusters": source_clusters,
+        "total_matches": total_matches
     }
 
 #     list_of_keys = []#a list to hold all the keys, meanning all the various fields
@@ -37,44 +66,44 @@ def handle_serp_response(data,image_path=None):
     
 #     print("Keys in the dictionary:", list_of_keys)#just a print statement to show the keys in the dictionary
 
-    # def get_base_domain(url):#extracts the base domain from a url ie google.com from https://www.google.com/search?q=example for example
-    #     ext = tldextract.extract(url)
-    #     return f"{ext.domain}.{ext.suffix}"
+#     def get_base_domain(url):#extracts the base domain from a url ie google.com from https://www.google.com/search?q=example for example
+#         ext = tldextract.extract(url)
+#         return f"{ext.domain}.{ext.suffix}"
     
 #     image_results_df  = pd.DataFrame(data[list_of_keys[4]])#stores the image results dictionary as a dataframe
-    # sources_links = {}# a dictionary which holds the title of the publisher provided by serp along with the corresponding links these are meant to be the source clusters
+#     sources_links = {}# a dictionary which holds the title of the publisher provided by serp along with the corresponding links these are meant to be the source clusters
 #     image_sources = image_results_df['source'].tolist()
 #     image_links = image_results_df['link'].tolist()
-    # clean_links = []#a list to hold the cleaned links, meaning the base domain of the links
+#     clean_links = []#a list to hold the cleaned links, meaning the base domain of the links
 
     
-    # for i in range(len(image_sources)):#this loop iterates through the image sources and links, it checks if the source is already in the sources_links dictionary, if not it adds it with the corresponding link, if it is already there it appends the link to the list of links for that source
-    #     if image_sources[i] not in sources_links:
-    #         sources_links[image_sources[i]] = [image_links[i]]
-    #     elif image_sources[i] in sources_links:
-    #         sources_links[image_sources[i]].append(image_links[i])    
+#     for i in range(len(image_sources)):#this loop iterates through the image sources and links, it checks if the source is already in the sources_links dictionary, if not it adds it with the corresponding link, if it is already there it appends the link to the list of links for that source
+#         if image_sources[i] not in sources_links:
+#             sources_links[image_sources[i]] = [image_links[i]]
+#         elif image_sources[i] in sources_links:
+#             sources_links[image_sources[i]].append(image_links[i])    
     
-    # for i in image_links:#loop which iterates through the image links and appends the base domain of the link to the clean_links list
-    #     clean_links.append(get_base_domain(i))
+#     for i in image_links:#loop which iterates through the image links and appends the base domain of the link to the clean_links list
+#         clean_links.append(get_base_domain(i))
         
-    # score = {}
+#     score = {}
 
-    # # if total==0:
-    # #     values_bias["no matches"] = 100.0
-    # # else:
-    # #     for source in clean_links:
-    # #         if source in mbfc_df['source'].values:
-    # #             bias = mbfc_df.loc[mbfc_df['source'] == source, 'bias'].values[0]
-    # #             if bias and bias in score:
-    # #                 score[bias] += 1
-    # #             else:
-    # #                 score[bias] = 1
+#     # if total==0:
+#     #     values_bias["no matches"] = 100.0
+#     # else:
+#     #     for source in clean_links:
+#     #         if source in mbfc_df['source'].values:
+#     #             bias = mbfc_df.loc[mbfc_df['source'] == source, 'bias'].values[0]
+#     #             if bias and bias in score:
+#     #                 score[bias] += 1
+#     #             else:
+#     #                 score[bias] = 1
             
-    # # values_bias = {}
-    # # total = sum(score.values())
-    # # for key,value in score.items():
-    # #             percentage = (value / total) * 100
-    # #             values_bias[key] = percentage
+#     # values_bias = {}
+#     # total = sum(score.values())
+#     # for key,value in score.items():
+#     #             percentage = (value / total) * 100
+#     #             values_bias[key] = percentage
                 
     
 #     # def ask_mistral(data_mistral):
@@ -152,3 +181,4 @@ def handle_serp_response(data,image_path=None):
 #     }
 # mbfc_df = pd.read_csv('mbfc.csv')
 # print(mbfc_df.head())  # Display the first few rows of the DataFrame
+# #

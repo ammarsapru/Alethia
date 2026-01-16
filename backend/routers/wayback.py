@@ -1,34 +1,20 @@
 import requests
-# from mock_response import dictionary_serp
 
-def get_earliest_snapshot(url: str):
-    api_url = "https://web.archive.org/cdx/search/cdx"
-    params = {
-        "url": url,
-        "output": "json",
-        "limit": 1,
-        "filter": "statuscode:200",
-        "sort": "ascending"
+def get_earliest_snapshot(url):
+    api_url = f"http://archive.org/wayback/available?url={url}"
+    # User-Agent is required to avoid being blocked by archive.org
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
     }
-    response  = requests.get(api_url, params=params)
-    
-    if response.status_code == 200:
-        data = response.json()
-        if len(data) > 1:
-            timestamp = data[1][1]  # The first element is the header
-            archive_url = f"https://web.archive.org/web/{timestamp}/{url}"
-            return{
-                "timestamp": timestamp,
-                "archive_url": archive_url,
-                "formatted_date": f"{timestamp[:4]}-{timestamp[4:6]}-{timestamp[6:8]}"
-            }
-        else:
-            return {"error": "No archived snapshots found."}
-    else:
-        return {"error": f"Failed with status code: {response.status_code}"}
-url = "https://www.britannica.com/art/Renaissance-art" 
-
-# result = get_earliest_snapshot(url)
-# print(result)
-
-# print("earlieast date found:", result.get("formatted_date", "No date found"))
+    try:
+        # Increased timeout to 30 seconds as Wayback Machine can be slow
+        response = requests.get(api_url, headers=headers, timeout=30)
+        
+        if response.status_code == 200:
+            return response.json()
+        
+        print(f"Wayback API returned status {response.status_code} for {url}")
+        return {} 
+    except Exception as e:
+        print(f"Error querying Wayback Machine for {url}: {e}")
+        return {}

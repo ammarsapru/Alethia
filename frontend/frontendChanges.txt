@@ -1,0 +1,2 @@
+- Added `handleReset` function to clear application state.
+- Added a floating "Plus" button to the results view to allow users to upload a new image without refreshing the page.

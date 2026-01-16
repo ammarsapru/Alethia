@@ -1,0 +1,31 @@
+# Alethia Frontend Redesign Plan
+
+This document outlines the changes made to the frontend to create a more modern, professional, and user-friendly interface.
+
+### 1. Design Philosophy
+- **Modern Dashboard Layout:** Moved from a single vertical feed to a multi-column grid layout for the results page. This improves information density and allows for easier comparison of data points.
+- **Component-Based Cards:** Encapsulated each piece of analysis (Bias, Knowledge Graph, Sources) into its own "Card" component. This creates a clean, organized, and consistent look.
+- **Refined Color Palette & Typography:** Introduced a new, more professional color scheme and switched to the "Inter" font for better readability.
+- **Improved User Feedback:** Enhanced the upload area and added skeleton loaders for a smoother transition while the user waits for results.
+
+### 2. New Files Created
+- **`app/components/Card.tsx`**: A new reusable component that acts as a container for all analysis modules. It provides a consistent style with a title and padded content area.
+- **`app/components/SkeletonLoader.tsx`**: A new component that displays a loading skeleton, mimicking the final layout to provide a better user experience than a simple spinner.
+
+### 3. Modified Files
+- **`app/layout.tsx`**:
+    - Imported and applied the 'Inter' Google Font to the entire application for a cleaner, more modern look.
+- **`app/globals.css`**:
+    - Updated root CSS variables to define the new color palette (backgrounds, cards, text, accents).
+    - Added base styles for the new theme.
+- **`app/page.tsx`**:
+    - **Major Overhaul:** Rewrote the entire return statement to implement the new layout.
+    - **Upload Area:** Redesigned the uploader for a cleaner look.
+    - **Loading State:** Replaced the simple loading text/spinner with the new `SkeletonLoader` component.
+    - **Results Layout:** Implemented a CSS grid to structure the results into a main panel (image + summary) and a sidebar (cards for bias, knowledge graph, etc.).
+- **`app/biasPieChart.tsx`**:
+    - Wrapped the component's output in the new `<Card>` component.
+    - Simplified props and improved chart labels.
+- **`app/sourceList.tsx`**:
+    - Wrapped the component's output in the new `<Card>` component.
+    - Added styling for a cleaner list of sources with hover effects.
