@@ -5,18 +5,19 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recha
 interface BiasPieChartProps {
   data: Record<string, number>;
   height?: number;
+  isDarkMode?: boolean;
 }
 
-// Color palette: Neon Green, White, Dark Green, Light Green, Black
+// Color palette: Blue (#3b82f6), White, Dark Blue, Light Blue, Black
 const COLORS = [
-  '#22c55e', // Neon Green
-  '#ffffff', // White
-  '#14532d', // Dark Green
-  '#86efac', // Light Green
-  '#000000', // Black
+  '#3b82f6', // Primary Blue
+  '#60a5fa', // Blue-400
+  '#1d4ed8', // Blue-700
+  '#2563eb', // Blue-600
+  '#1e40af', // Blue-800
 ];
 
-const BiasPieChart: React.FC<BiasPieChartProps> = ({ data, height = 300 }) => {
+const BiasPieChart: React.FC<BiasPieChartProps> = ({ data, height = 300, isDarkMode = true }) => {
   const chartData = Object.entries(data).map(([name, value]) => ({
     name,
     value,
@@ -33,7 +34,7 @@ const BiasPieChart: React.FC<BiasPieChartProps> = ({ data, height = 300 }) => {
           outerRadius={(height / 2) - 20}
           fill="#8884d8"
           dataKey="value"
-          stroke="#22c55e" // Green border ensures black slices are visible
+          stroke={isDarkMode ? "#3b82f6" : "#ffffff"} 
           strokeWidth={1}
         >
           {chartData.map((entry, index) => (
@@ -41,11 +42,15 @@ const BiasPieChart: React.FC<BiasPieChartProps> = ({ data, height = 300 }) => {
           ))}
         </Pie>
         <Tooltip 
-          contentStyle={{ backgroundColor: '#000000', borderColor: '#22c55e', color: '#22c55e' }}
-          itemStyle={{ color: '#22c55e' }}
+          contentStyle={{ 
+            backgroundColor: isDarkMode ? '#000000' : '#ffffff', 
+            borderColor: '#3b82f6', 
+            color: isDarkMode ? '#3b82f6' : '#1e3a8a' 
+          }}
+          itemStyle={{ color: isDarkMode ? '#3b82f6' : '#1e3a8a' }}
         />
         <Legend 
-          wrapperStyle={{ color: '#22c55e' }} // Sets text color for legend items
+          wrapperStyle={{ color: isDarkMode ? '#3b82f6' : '#1e3a8a' }} 
         />
       </PieChart>
     </ResponsiveContainer>

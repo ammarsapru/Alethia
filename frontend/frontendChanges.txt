@@ -1,2 +1,5 @@
 - Added `handleReset` function to clear application state.
 - Added a floating "Plus" button to the results view to allow users to upload a new image without refreshing the page.
+- Changed the secondary/accent color from green to a specific blue (`#3b82f6`) across the entire application (buttons, borders, text, and chart).
+- Updated primary fonts to Inter (Sans-serif) for body content and JetBrains Mono (Monospace) for headers, technical data, and numbers to achieve a "terminal/code" aesthetic.
+- Integrated `lucide-react` icon pack across the application. Added icons to all infographic sections (Scan, ShieldCheck, Aperture, Map, activity, etc.) to enhance the technical visual language.

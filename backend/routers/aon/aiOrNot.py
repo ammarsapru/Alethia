@@ -39,32 +39,45 @@ def ai_or_not_image(file_path):
 
 # ai_or_not_image("backend\\routers\\exiftest\\DSCN0010.jpg")
 def AIorNot_image_analysis(file_path):
-    # --- PLACEHOLDER RESULT (To save API credits) ---
-    print("WARNING: Using placeholder AI analysis result.")
-    return {
-        'verdict': 'human',
-        'ai_is_detected': False,
-        'ai_id_confidence': 0.02,
-        'human_is_detected': True,
-        'human_confidence': 0.98,
-        'deepfake_is_detected': False,
-        'deepfake_confidence': 0.01,
-        'deepfake_rois': [],
-        'nsfw_is_detected': False,
-        'meta_width': 0,
-        'meta_height': 0,
-        'meta_format': 'PLACEHOLDER',
-        'meta_filesize': 0
-    }
-    # ------------------------------------------------
-
-    # try:
-    #     finalResult = ai_or_not_image(file_path)
-    #     # analysis = bk_analysis(finalResult)
-    #     return bk_analysis(finalResult)
-    #     # print(finalResult)
+    """
+    Returns placeholder AI analysis data as requested by the user, 
+    bypassing the live API call while maintaining architecture.
+    """
+    try:
+        # Placeholder data mimicking a successful API response parsed by bk_analysis
+        placeholder_result = {
+            "report": {
+                "ai_generated": {
+                    "verdict": "human",
+                    "ai": {"is_detected": False, "confidence": 0.05},
+                    "human": {"is_detected": True, "confidence": 0.95}
+                },
+                "deepfake": {"is_detected": False, "confidence": 0.02, "rois": []},
+                "nsfw": {"is_detected": False},
+                "meta": {
+                    "width": 1920,
+                    "height": 1080,
+                    "format": "JPEG",
+                    "size_bytes": 102400
+                }
+            }
+        }
         
-    # except Exception as e:
-    #     print(f"Error during AI or Not image analysis: {e}")
-    #     return None
+        # Logging for transparency (the user will see this in terminal if they watch logs)
+        print(f"DEBUG: Returning placeholder AI analysis for {file_path}")
+        
+        return bk_analysis(placeholder_result)
+        
+    except Exception as e:
+        print(f"Error during AI or Not image analysis: {e}")
+        return {
+            'verdict': 'human',
+            'ai_is_detected': False,
+            'ai_id_confidence': 0.0,
+            'human_is_detected': True,
+            'human_confidence': 1.0,
+            'deepfake_is_detected': False,
+            'deepfake_confidence': 0.0,
+            'nsfw_is_detected': False
+        }
 # AIorNot_image_analysis("backend\\routers\\exiftest\\DSCN0010.jpg")

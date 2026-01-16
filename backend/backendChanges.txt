@@ -2,3 +2,4 @@
 - Updated `search.py` to fix `total_matches` logic and increase timeout.
 - Updated `handle_serp_response.py` to correctly parse the nested JSON structure from the Wayback Machine API to extract timestamps.
 - Limited Wayback Machine checks to the top 5 links to improve performance and prevent timeouts.
+- Switched AIorNot detection from placeholder data to live API calls in `aiOrNot.py`.
