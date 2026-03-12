@@ -8,6 +8,7 @@ absolute_path = os.path.join(os.path.dirname(__file__), path)
 bias_dataset = pd.read_csv(absolute_path)
 
 def bias_split(bias_Data):
+    print("--- bias_split function called ---")
     score = {}
 
     for source in bias_Data:
@@ -27,6 +28,6 @@ def bias_split(bias_Data):
         for key, value in score.items():
             percentage = (value / total) * 100
             values_bias[key] = percentage
-
+    print("Bias percentages calculated:", values_bias)
     return values_bias
 # print(bias_dataset.head())  # Display the first few rows of the DataFrame

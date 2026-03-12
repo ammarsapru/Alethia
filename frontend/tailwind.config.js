@@ -8,7 +8,6 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        cinzel: ['var(--font-cinzel)'],
         lubrifont: ['"WDXL Lubrifont TC"', 'sans-serif'],
       },
     },

@@ -15,6 +15,17 @@ export interface APIResult {
   source_clusters: {
     [domain: string]: string[];
   };
-  // The knowledge_graph seems to have been replaced by more specific fields.
-  // If it's still needed, it can be added back.
+  exif_data?: any;
+  ai_analysis?: {
+    verdict?: string;
+    ai_id_confidence?: number;
+    human_confidence?: number;
+    deepfake_confidence?: number;
+    nsfw_is_detected?: boolean;
+    scores?: {
+      ai_generated?: number;
+      human?: number;
+      deepfake?: number;
+    };
+  };
 }

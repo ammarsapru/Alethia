@@ -1,0 +1,34 @@
+Based on your requirements, here is an assessment of what you are asking and how much of it is technically achievable with the current setup.
+
+What I think you are asking
+You want to move away from the "washed out" grey look and create a high-contrast, "Cyber/Technical" map that feels like a native part of your UI. This involves:
+
+Selective Color Control: Making labels crisp white, streets a distinct grey, and the background pure black.
+Brand Consistency: Forcing the location marker to match the specific blue accent used in your sidebar and buttons, rather than a generic Google red.
+How much is possible?
+1. The "Iframe" Limitation (Current Method)
+Currently, your map is an <iframe> embedding a generic Google search result. The "grey" look is created by a CSS filter in your page.tsx:847: invert grayscale brightness-75.
+
+What is possible: We can remove grayscale and use a combination of invert, hue-rotate, and brightness/contrast.
+Background (Black) and Labels (White): High. Inverting a standard white map naturally turns the background black and text white.
+Marker (Same Blue): Medium. Inverting Google's red pin turns it Cyan. We can use hue-rotate to push that Cyan toward your specific blue, but it will also shift the colors of everything else (like parks or water) slightly.
+What is NOT possible: We cannot target just the streets or just the marker. The filter is a "dumb" tool that flips all pixels on the screen at once.
+2. The "Professional" Route (Custom Styling)
+To get the exact control you want (e.g., "Parks = Black", "Streets = Grey", "Marker = My exact hex code"), we would need to switch from a simple iframe to a map library or the modern Maps Embed API with a Map ID.
+
+Google Maps Style: You can create a style in the Google Cloud Console where you manually set the hex codes for roads, water, and text.
+Custom Marker: This requires the Google Maps JavaScript API or a library like react-google-maps.
+My Recommendation
+We can get 90% of the way there right now by tweaking your CSS filters. It will look significantly better and more "integrated" without needing to set up complex API keys or new libraries.
+
+The "Quick Fix" logic would be:
+
+Remove grayscale.
+Set invert(100%) (turns white background to black).
+Add hue-rotate (shifts the inverted Red/Cyan pin to your specific Blue).
+Crank up contrast to make labels
+pop as white and streets appear as grey.
+
+Would you like me to try implementing this CSS filter-based approach first?
+
+Gemini 3 Flash (Preview) • 0.33x

@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
 
 html,
 body {
@@ -10,17 +9,20 @@ body {
   overflow-x: hidden; /* prevents scrollbars unless needed */
 }
 
+.light-theme {
+  --sb-track: #ffffff;
+  --sb-thumb: #dc2626; /* Red-600 */
+  --sb-thumb-hover: #ef4444; /* Red-500 */
+  --sb-thumb-border: #ffffff;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --font-cinzel: 'Cinzel', serif;
   --sb-track: #000000;
+  --sb-thumb: #1e3a8a; /* Deep blue */
+  --sb-thumb-hover: #3b82f6; /* Bright blue */
   --sb-thumb-border: #000000;
-}
-
-.light-theme {
-  --sb-track: #ffffff;
-  --sb-thumb-border: #ffffff;
 }
 
 @theme inline {
@@ -55,19 +57,19 @@ body {
 }
 
 ::-webkit-scrollbar-thumb, .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #1e3a8a; /* Deep blue */
+  background: var(--sb-thumb);
   border: 3px solid var(--sb-thumb-border);
   border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover, .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #3b82f6; /* Bright blue */
+  background: var(--sb-thumb-hover);
 }
 
 /* Firefox Support */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #1e3a8a #000000;
+  scrollbar-color: var(--sb-thumb) var(--sb-track);
 }
 
 @layer utilities {
@@ -104,4 +106,34 @@ body {
     border-bottom: 2px solid #3b82f6;
     border-right: 2px solid #3b82f6;
   }
+
+  .grid-background {
+    background-image: 
+      linear-gradient(to right, rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .glow-text {
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+
+  .glow-box {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+  }
+}
+
+@keyframes scan {
+  0%, 100% {
+    top: 0;
+    opacity: 0.2;
+  }
+  50% {
+    top: 100%;
+    opacity: 1;
+  }
+}
+
+.animate-scan {
+  animation: scan 2s ease-in-out infinite;
 }

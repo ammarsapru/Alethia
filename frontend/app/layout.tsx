@@ -16,6 +16,11 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Alethia",
   description: "Uncover the truth behind any image.",
+  icons: {
+    icon: "/logo6.png",
+    shortcut: "/logo6.png",
+    apple: "/logo6.png",
+  },
 };
 
 export default function RootLayout({

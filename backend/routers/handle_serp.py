@@ -43,9 +43,15 @@ def handle_serp_response(data, image_path=None):
         time.sleep(1)
     print("Dates found:", urlDate)
 
-    # print(earliestDate(urlDate))
-    biases = bias_split(bias_data)
-    earliest_date = earliestDate(urlDate)
+    try:
+        # print(earliestDate(urlDate))
+        print("-----calling bias split-----------", flush = True)
+        biases = bias_split(bias_data)
+        print("-----calling earliest Date function ----------")
+        earliest_date = earliestDate(urlDate)
+    except Exception as e:
+        print("CRASH in handle_serp logic: {e}")
+    print("-----calling image description function----------")
     image_description = describe_image(image_path) if image_path else None
 
     # Calculate total matches: use SERP total if available, else fallback to link count

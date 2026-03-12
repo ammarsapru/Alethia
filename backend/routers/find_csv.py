@@ -5,11 +5,11 @@ def import_csv_to_dataframe(file_path):
     Imports a CSV file and stores it as a pandas DataFrame.
 
     Args:
-        file_path (str): The path to the CSV file.
+    file_path (str): The path to the CSV file.
 
     Returns:
-        pandas.DataFrame: A DataFrame containing the CSV data.
-                          Returns None if an error occurs.
+    pandas.DataFrame: A DataFrame containing the CSV data.
+    Returns None if an error occurs.
     """
     try:
         df = pd.read_csv(file_path)

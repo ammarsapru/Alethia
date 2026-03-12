@@ -1,0 +1,291 @@
+{
+  "webDetection": {
+    "webEntities": [
+      {
+        "entityId": "/m/03ggkw",
+        "score": 1.08,
+        "description": "Boeing F/A-18E/F Super Hornet"
+      },
+      {
+        "entityId": "/m/02hc33",
+        "score": 1.0578,
+        "description": "McDonnell Douglas F-15E Strike Eagle"
+      },
+      {
+        "entityId": "/m/047yc",
+        "score": 0.90119994,
+        "description": "Kuwait"
+      },
+      {
+        "entityId": "/m/0337b",
+        "score": 0.88874996,
+        "description": "McDonnell Douglas F-15 Eagle"
+      },
+      {
+        "entityId": "/m/016dy9",
+        "score": 0.64275,
+        "description": "Eurofighter Typhoon"
+      },
+      {
+        "entityId": "/m/011btmhp",
+        "score": 0.6368,
+        "description": "Kuwait Armed Forces"
+      },
+      {
+        "entityId": "/m/02rjqfl",
+        "score": 0.6121,
+        "description": "United States Air Force"
+      },
+      {
+        "entityId": "/t/2b8wggcgs648g",
+        "score": 0.6121,
+        "description": ""
+      },
+      {
+        "entityId": "/m/0k5j",
+        "score": 0.60855,
+        "description": "Aircraft"
+      },
+      {
+        "entityId": "/m/0cf1hq",
+        "score": 0.5852,
+        "description": "Kuwait Air Force"
+      }
+    ],
+    "fullMatchingImages": [
+      {
+        "url": "https://aboutmsr.com/wp-content/uploads/2025/10/NEW-TOP-SHOT-4.webp",
+        "score": 0.0
+      },
+      {
+        "url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1612568976843282",
+        "score": 0.0
+      },
+      {
+        "url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1502738688092067",
+        "score": 0.0
+      },
+      {
+        "url": "https://lookaside.fbsbx.com/lookaside/crawler/threads/DVcc9kRjWGI/0/image.jpg",
+        "score": 0.0
+      },
+      {
+        "url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1266831502272080",
+        "score": 0.0
+      },
+      {
+        "url": "https://www.real.gr/wp-content/uploads/2026/03/%CE%9A%CE%BF%CF%85%CE%B2%CE%AD%CE%B9%CF%84-FA-18.jpg",
+        "score": 0.0
+      },
+      {
+        "url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1348619677289930",
+        "score": 0.0
+      },
+      {
+        "url": "https://turdef.com/storage/images/articles/2976/v1681585259/03_FA_18_2974_02_ba73a32600.jpg",
+        "score": 0.0
+      },
+      {
+        "url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1369194051901549",
+        "score": 0.0
+      },
+      {
+        "url": "https://i.servimg.com/u/f41/11/88/40/23/clipb998.jpg",
+        "score": 0.0
+      }
+    ],
+    "partialMatchingImages": [
+      {
+        "url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1513260876830149",
+        "score": 0.0
+      },
+      {
+        "url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=918870033857718",
+        "score": 0.0
+      },
+      {
+        "url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1439694441141677",
+        "score": 0.0
+      },
+      {
+        "url": "https://m1.aboluowang.com/uploadfile/2026/0305/20260305175928278.webp",
+        "score": 0.0
+      },
+      {
+        "url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=122209384640360364",
+        "score": 0.0
+      },
+      {
+        "url": "https://preview.redd.it/the-eagle-tamed-by-the-rhino-the-f15s-perfect-104-0-air-to-v0-mfn7kg8440ng1.jpg?width=1080&crop=smart&auto=webp&s=3ed130f6c05f724ebde0af2243fd75056c9006b9",
+        "score": 0.0
+      },
+      {
+        "url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1339040781595316",
+        "score": 0.0
+      },
+      {
+        "url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=10235728004913250",
+        "score": 0.0
+      },
+      {
+        "url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=3166782943501100",
+        "score": 0.0
+      },
+      {
+        "url": "https://i.ytimg.com/vi/-FTO3pVVsn8/mqdefault.jpg",
+        "score": 0.0
+      }
+    ],
+    "pagesWithMatchingImages": [
+      {
+        "url": "https://www.youtube.com/watch?v=mp5Q9aB931w",
+        "pageTitle": "NEW Footage: F/A-18 SHOOTING 3 F-15E Fighter Jets - YouTube",
+        "score": 0.0,
+        "fullMatchingImages": [],
+        "partialMatchingImages": []
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=RUbckcEa7sA",
+        "pageTitle": "Accident or Crime? A Kuwaiti F/A-18 Hornet Shot Down ... - YouTube",
+        "score": 0.0,
+        "fullMatchingImages": [],
+        "partialMatchingImages": []
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=JSU7wSQl1-o",
+        "pageTitle": "Kuwait F-18 Shooting Down U.S. F-15E's Is Worse Than You Think",
+        "score": 0.0,
+        "fullMatchingImages": [],
+        "partialMatchingImages": []
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=3cb7R1xEZBI",
+        "pageTitle": "Kuwaiti F-18 Shot Down American Strike Eagles - YouTube",
+        "score": 0.0,
+        "fullMatchingImages": [],
+        "partialMatchingImages": []
+      },
+      {
+        "url": "https://turdef.com/article/u-s-approves-cad-pad-sale-of-kuwait-s-f-a-18-and-kc-130-j",
+        "pageTitle": "U.S. Approves CAD/PAD sale of Kuwait's F/A-18 and KC-130J",
+        "fullMatchingImages": [
+          {
+            "url": "https://turdef.com/storage/images/articles/2976/v1681585259/03_FA_18_2974_02_ba73a32600.jpg",
+            "score": 0.0
+          }
+        ],
+        "score": 0.0,
+        "partialMatchingImages": []
+      },
+      {
+        "url": "https://www.facebook.com/Scramblemagazine/posts/nice-scoop-kuwaiti-super-hornet-showing-its-coloursthese-are-the-first-images-of/4049488718410965/",
+        "pageTitle": "Kuwaiti Super Hornet showing its colours These are the first images ...",
+        "fullMatchingImages": [
+          {
+            "url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=4049481895078314",
+            "score": 0.0
+          }
+        ],
+        "score": 0.0,
+        "partialMatchingImages": []
+      },
+      {
+        "url": "https://www.facebook.com/glenphillipsjr/posts/kuwaiti-fa-18-hornet-fighter-jet-was-responsible-for-shooting-down-3-usaf-f-15e-/10235728018713595/",
+        "pageTitle": "Kuwaiti F/A-18 Hornet fighter jet was responsible for shooting down ...",
+        "partialMatchingImages": [
+          {
+            "url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=10235728004913250",
+            "score": 0.0
+          }
+        ],
+        "score": 0.0,
+        "fullMatchingImages": []
+      },
+      {
+        "url": "https://www.reddit.com/r/malaysia/comments/1n9x6ra/malaysia_considering_alternatives_to_fa18_jet/",
+        "pageTitle": "Malaysia considering alternatives to F/A-18 jet delivery from Kuwait",
+        "score": 0.0,
+        "fullMatchingImages": [],
+        "partialMatchingImages": []
+      },
+      {
+        "url": "https://www.facebook.com/NextGenPHDef/posts/kuwaiti-fa-18-fighter-jet-was-responsible-for-shooting-down-3-usaf-f-15e-strike-/1429525058969740/",
+        "pageTitle": "Kuwaiti F/A-18 fighter jet was responsible for shooting down 3 USAF ...",
+        "fullMatchingImages": [
+          {
+            "url": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1429525028969743",
+            "score": 0.0
+          }
+        ],
+        "score": 0.0,
+        "partialMatchingImages": []
+      },
+      {
+        "url": "https://www.instagram.com/p/DVcmtkQmqZo/",
+        "pageTitle": "A Kuwaiti F/A-18 fighter jet was reported to be responsible for ...",
+        "fullMatchingImages": [
+          {
+            "url": "https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3845118141827819563",
+            "score": 0.0
+          }
+        ],
+        "score": 0.0,
+        "partialMatchingImages": []
+      }
+    ],
+    "visuallySimilarImages": [
+      {
+        "url": "https://www.safran-group.com/sites/default/files/crops/rt_i_3_2/public/paragraph/22041/img/original/SAF01333.jpg?itok=q3zo3MnA",
+        "score": 0.0
+      },
+      {
+        "url": "https://cdn.northropgrumman.com/-/media/wp-content/uploads/aargm-er-missile-achieves-successful-milestone-c-decision.jpg?h=567&iar=0&w=816&rev=621b6327b8fb4963b478b18064bf4610",
+        "score": 0.0
+      },
+      {
+        "url": "https://www.nasa.gov/wp-content/uploads/2026/02/afrc2026-0018-064.jpg",
+        "score": 0.0
+      },
+      {
+        "url": "https://www.lockheedmartin.com/content/dam/lockheed-martin/rms/photo/training/tls/AIR_Product-Image.jpg",
+        "score": 0.0
+      },
+      {
+        "url": "https://www.oracle.com/a/ocom/img/social-govcloud-class-1200x630.jpg",
+        "score": 0.0
+      },
+      {
+        "url": "https://www.nist.gov/sites/default/files/styles/400_x_250_focal_point/public/images/2025/02/21/f-18.png?h=9f7a1e98&itok=snlOJysM",
+        "score": 0.0
+      },
+      {
+        "url": "https://prd-sc102-cdn.rtx.com/raytheon/-/media/ray/what-we-do/air/air-dominance/air-to-surface-missiles/stormbreaker-smart-weapon/2020-01/images/stormbreaker-gal5.jpg?rev=821e47dd293c4c14908a15fad6c1a164&rid=3c10bf193cd441d78c26f722a4c0dd72",
+        "score": 0.0
+      },
+      {
+        "url": "https://www.datocms-assets.com/43475/1772903926-ap-avioane-f-16.jpg?auto=format&crop=focalpoint&fit=crop&fp-x=0.53&fp-y=0.52&h=550&w=950",
+        "score": 0.0
+      },
+      {
+        "url": "https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3834635476150710752",
+        "score": 0.0
+      },
+      {
+        "url": "https://www.science-et-vie.com/wp-content/uploads/scienceetvie/2025/04/design-sans-titre-458.png",
+        "score": 0.0
+      }
+    ],
+    "bestGuessLabels": [
+      {
+        "label": "f a 18e kuwait",
+        "languageCode": "en"
+      }
+    ]
+  },
+  "faceAnnotations": [],
+  "landmarkAnnotations": [],
+  "logoAnnotations": [],
+  "labelAnnotations": [],
+  "localizedObjectAnnotations": [],
+  "textAnnotations": []
+}

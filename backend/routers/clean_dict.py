@@ -11,18 +11,37 @@ def clean_dict(input_dict):
         return f"{ext.domain}.{ext.suffix}"
         
 
-    print("function clean_dict called")
+    print(f"function clean_dict called. Keys: {input_dict.keys()}")
     
-    list_of_keys = []#a list to hold all the keys, meanning all the various fields
+    # Try multiple potential keys for SerpAPI results
+    results = input_dict.get('image_results')
+    if results is None:
+        results = input_dict.get('organic_results')
+    if results is None:
+        results = input_dict.get('visual_matches')
+    if results is None:
+        results = []
+
+    print(f"Found {len(results)} results to process.")
+    image_results_df = pd.DataFrame(results)
+
+    print(f"DataFrame columns: {image_results_df.columns.tolist()}")#adding comments to understand
     
-    for key in input_dict:#appends all the keys to the list
-        list_of_keys.append(key)
+    if image_results_df.empty:
+        return [], [], {}
+    
+    # Safety check for required columns
+    if 'link' not in image_results_df.columns:
+        return [], [], {}
         
-    image_results_df  = pd.DataFrame(input_dict['image_results'])#stores the image results dictionary as a dataframe
-    image_results_df.head()#prints the first 5 rows of the dataframe
-    
     image_links = image_results_df['link'].tolist()
-    image_sources = image_results_df['source'].tolist()
+    print(image_links)#second comment to understand
+    
+    # 'source' might be missing in some result types, fallback to domain
+    if 'source' in image_results_df.columns:
+        image_sources = image_results_df['source'].tolist()
+    else:
+        image_sources = [get_base_domain(url) for url in image_links]
     
     for i in range(len(image_sources)):#this loop iterates through the image sources and links, it checks if the source is already in the sources_links dictionary, if not it adds it with the corresponding link, if it is already there it appends the link to the list of links for that source
         if image_sources[i] not in sources_links:

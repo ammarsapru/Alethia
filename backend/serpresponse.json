@@ -1,0 +1,295 @@
+{
+  "search_metadata": {
+    "id": "69b337bfe171b9e7d8890c64",
+    "status": "Success",
+    "json_endpoint": "https://serpapi.com/searches/ytO4jBJgdlnk1oNWayQeGw/69b337bfe171b9e7d8890c64.json",
+    "created_at": "2026-03-12 22:01:35 UTC",
+    "processed_at": "2026-03-12 22:01:35 UTC",
+    "google_reverse_image_url": "https://www.google.com/searchbyimage?image_url=https://res.cloudinary.com/dkder2siw/image/upload/v1773352895/oddqonzmpigwcwuhc4hx.jpg&sbisrc=cr_1_5_2",
+    "raw_html_file": "https://serpapi.com/searches/ytO4jBJgdlnk1oNWayQeGw/69b337bfe171b9e7d8890c64.html",
+    "total_time_taken": 1.92
+  },
+  "search_parameters": {
+    "engine": "google_reverse_image",
+    "image_url": "https://res.cloudinary.com/dkder2siw/image/upload/v1773352895/oddqonzmpigwcwuhc4hx.jpg",
+    "google_domain": "google.com",
+    "device": "desktop"
+  },
+  "search_information": {
+    "total_results": 270000000,
+    "time_taken_displayed": 0.36,
+    "organic_results_state": "Results for exact spelling"
+  },
+  "image_results": [
+    {
+      "position": 1,
+      "title": "Kuwaiti F/A-18 Hornet fighter jet was responsible for ...",
+      "link": "https://www.facebook.com/glenphillipsjr/posts/kuwaiti-fa-18-hornet-fighter-jet-was-responsible-for-shooting-down-3-usaf-f-15e-/10235728018713595/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.facebook.com/glenphillipsjr/posts/kuwaiti-fa-18-hornet-fighter-jet-was-responsible-for-shooting-down-3-usaf-f-15e-/10235728018713595/&ved=2ahUKEwiCl_mrrpuTAxVe_8kDHRiNIo8QFnoFCLcDEAE",
+      "displayed_link": "130+ reactions \u00b7 1 week ago",
+      "favicon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/kgsPgWU5k3kS0FNpekMOs1bZX71qn8ezJZBybT_N5bs.png",
+      "snippet": "Kuwaiti F/A-18 Hornet fighter jet was responsible for shooting down 3 USAF F-15E Strike Eagles over Kuwait on Sunday in a blue on blue incident.",
+      "snippet_highlighted_words": [
+        "Kuwaiti F/A-18 Hornet fighter jet"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Kuwaiti F/A-18 Hornet fighter jet was responsible for shooting down 3 USAF F-15E Strike Eagles over Kuwait on Sunday in a blue on blue incident.",
+          "source_info_link": "https://www.facebook.com/glenphillipsjr/posts/kuwaiti-fa-18-hornet-fighter-jet-was-responsible-for-shooting-down-3-usaf-f-15e-/10235728018713595/",
+          "icon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/kgsPgWU5k3kS0FNpekMOsw2ePGUkpfNzuExMsA9E6WUU9-8bkTBLIpOoltymBMGC.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.facebook.com/glenphillipsjr/posts/kuwaiti-fa-18-hornet-fighter-jet-was-responsible-for-shooting-down-3-usaf-f-15e-/10235728018713595/&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.facebook.com%2Fglenphillipsjr%2Fposts%2Fkuwaiti-fa-18-hornet-fighter-jet-was-responsible-for-shooting-down-3-usaf-f-15e-%2F10235728018713595%2F",
+      "source": "Facebook \u00b7 Glen Phillips Jr."
+    },
+    {
+      "position": 2,
+      "title": "F/A-18E/F Super Hornet | NAVAIR",
+      "link": "https://www.navair.navy.mil/product/FA-18EF-Super-Hornet",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.navair.navy.mil/product/FA-18EF-Super-Hornet&ved=2ahUKEwiCl_mrrpuTAxVe_8kDHRiNIo8QFnoFCLUDEAE",
+      "displayed_link": "https://www.navair.navy.mil \u203a product",
+      "favicon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/PVzbRUMjuzp943XCSLXSvo0RljUUq-QkiMLeZ2EUKms.png",
+      "snippet": "Built on the nation's first strike fighter, the F/A-18 Hornet, today's F/A-18E/F Super Hornet is an attack aircraft as well as a fighter through selected ...",
+      "snippet_highlighted_words": [
+        "F/A-18E/F Super Hornet"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Built on the nation's first strike fighter, the F/A-18 Hornet, today's F/A-18E/F Super Hornet is an attack aircraft as well as a fighter through selected ...",
+          "source_info_link": "https://www.navair.navy.mil/product/FA-18EF-Super-Hornet",
+          "icon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/PVzbRUMjuzp943XCSLXSvmxojgu_M3P9QltQ_Cb8JEXjs3AHk9rksS2WULtyIsi0.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.navair.navy.mil/product/FA-18EF-Super-Hornet&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.navair.navy.mil%2Fproduct%2FFA-18EF-Super-Hornet",
+      "source": "NAVAIR (.mil)"
+    },
+    {
+      "position": 3,
+      "title": "Boeing F/A-18E/F Super Hornet",
+      "link": "https://en.wikipedia.org/wiki/Boeing_F/A-18E/F_Super_Hornet",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://en.wikipedia.org/wiki/Boeing_F/A-18E/F_Super_Hornet&ved=2ahUKEwiCl_mrrpuTAxVe_8kDHRiNIo8QFnoFCLoDEAE",
+      "displayed_link": "https://en.wikipedia.org \u203a wiki \u203a F_Super_Hornet",
+      "favicon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/DgwjA0nI5ouQzgpl52Uv_dsGSI6olPKEDFDwHG-QBQE.png",
+      "snippet": "The Boeing F/A-18E and F/A-18F Super Hornet are a series of American supersonic twin-engine, carrier-capable, multirole fighter aircraft derived from the ...",
+      "snippet_highlighted_words": [
+        "American supersonic twin-engine, carrier-capable, multirole fighter aircraft"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "The Boeing F/A-18E and F/A-18F Super Hornet are a series of American supersonic twin-engine, carrier-capable, multirole fighter aircraft derived from the ...",
+          "source_info_link": "https://en.wikipedia.org/wiki/Boeing_F/A-18E/F_Super_Hornet",
+          "icon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/DgwjA0nI5ouQzgpl52Uv_U-FWFcuAWpLCwWa729Pgn8gYeK2b_Hs_NahpuFgK8oJ.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://en.wikipedia.org/wiki/Boeing_F/A-18E/F_Super_Hornet&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FBoeing_F%2FA-18E%2FF_Super_Hornet",
+      "source": "Wikipedia"
+    },
+    {
+      "position": 4,
+      "title": "McDonnell Douglas F/A-18 Hornet - Independence Day Wiki",
+      "link": "https://independenceday.fandom.com/wiki/McDonnell_Douglas_F/A-18_Hornet",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://independenceday.fandom.com/wiki/McDonnell_Douglas_F/A-18_Hornet&ved=2ahUKEwiCl_mrrpuTAxVe_8kDHRiNIo8QFnoFCLkDEAE",
+      "displayed_link": "https://independenceday.fandom.com \u203a wiki \u203a A-18_H...",
+      "favicon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/wu16GRysor2tcgJd5jCEgKqXSu7Lem3JibPlzyB64wI.png",
+      "snippet": "The McDonnell Douglas F/A-18 Hornet is a twin-engine supersonic, all-weather carrier-capable multirole combat jet, designed as both a fighter and attack ...",
+      "snippet_highlighted_words": [
+        "twin-engine supersonic, all-weather carrier-capable multirole combat jet"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "The McDonnell Douglas F/A-18 Hornet is a twin-engine supersonic, all-weather carrier-capable multirole combat jet, designed as both a fighter and attack ...",
+          "source_info_link": "https://independenceday.fandom.com/wiki/McDonnell_Douglas_F/A-18_Hornet",
+          "icon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/wu16GRysor2tcgJd5jCEgBqoj5Rf6_BadTyYIHC9ETgPAr8awOR8ijwmet_X_CVR.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://independenceday.fandom.com/wiki/McDonnell_Douglas_F/A-18_Hornet&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Findependenceday.fandom.com%2Fwiki%2FMcDonnell_Douglas_F%2FA-18_Hornet",
+      "source": "Independence Day Wiki | Fandom"
+    },
+    {
+      "position": 5,
+      "title": "F/A-18 Super Hornet & EA-18 Growler",
+      "link": "https://www.boeing.com/defense/fighters-and-bombers/fa-18-super-hornet-and-ea-18-growler",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.boeing.com/defense/fighters-and-bombers/fa-18-super-hornet-and-ea-18-growler&ved=2ahUKEwiCl_mrrpuTAxVe_8kDHRiNIo8QFnoFCLQDEAE",
+      "displayed_link": "https://www.boeing.com \u203a ... \u203a Fighters and Bombers",
+      "favicon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/Wo9GgEnXjwEv5E9hUhdKSpa0uJsmat-eOd8pkCGOfu4.jpeg",
+      "snippet": "The F/A-18 Super Hornet is the backbone of carrier air wings \u2014 a combat-proven, multirole strike fighter delivering advanced avionics, AESA radar, ...",
+      "snippet_highlighted_words": [
+        "F/A-18 Super Hornet is the backbone of carrier air wings"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "The F/A-18 Super Hornet is the backbone of carrier air wings \u2014 a combat-proven, multirole strike fighter delivering advanced avionics, AESA radar, ...",
+          "source_info_link": "https://www.boeing.com/defense/fighters-and-bombers/fa-18-super-hornet-and-ea-18-growler",
+          "icon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/Wo9GgEnXjwEv5E9hUhdKSnha5dY1mqlMyG96VWbTXvLWBZXvto7IWztf5UDGErxC.jpeg"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.boeing.com/defense/fighters-and-bombers/fa-18-super-hornet-and-ea-18-growler&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.boeing.com%2Fdefense%2Ffighters-and-bombers%2Ffa-18-super-hornet-and-ea-18-growler",
+      "source": "The Boeing Company"
+    },
+    {
+      "position": 6,
+      "title": "Kuwaiti F-18 Downs U.S. F-15E \u2014 Intentional? Fighter Pilots ...",
+      "link": "https://www.youtube.com/watch?v=eZCDeYReTJA",
+      "displayed_link": "204K+ views \u00b7 2 days ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOvel7eqTTK6QFIr751tFPHGURWUD33z5MGiF5bKWSEz00QO5CWeA1Uw&s",
+      "favicon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/Q3Orw-alk7syPophJtXlPRkkbPn9JvAC2D3XNzBx-EE.png",
+      "snippet": "***Shoot Down Video***. A video circulating online appears to show a Kuwaiti F/A-18 Hornet shooting down a USAF F-15E Strike Eagle during a ...",
+      "duration": "17:15",
+      "about_this_result": {
+        "source": {
+          "description": "***Shoot Down Video***. A video circulating online appears to show a Kuwaiti F/A-18 Hornet shooting down a USAF F-15E Strike Eagle during a ...",
+          "source_info_link": "https://www.youtube.com/watch?v=eZCDeYReTJA",
+          "icon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/Q3Orw-alk7syPophJtXlPeggpWJQa9cPefloKj9pg5Cl5XORXnlPTh723kRta6xD.png"
+        }
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.youtube.com/watch?v=eZCDeYReTJA&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DeZCDeYReTJA",
+      "video_link": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcT83DteYoFpCtxKqMzCuQRuSa7eRWYtyy7zIg",
+      "source": "YouTube \u00b7 The Mover and Gonky Show"
+    },
+    {
+      "position": 7,
+      "title": "Kuwaiti F/A-18 Allegedly Involved in F-15E Friendly Fire ...",
+      "link": "https://theaviationist.com/2026/03/04/kuwaiti-f-a-18-f-15e-friendly-fire/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://theaviationist.com/2026/03/04/kuwaiti-f-a-18-f-15e-friendly-fire/&ved=2ahUKEwiCl_mrrpuTAxVe_8kDHRiNIo8QFnoFCLgDEAE",
+      "displayed_link": "https://theaviationist.com \u203a 2026/03/04",
+      "favicon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/lwjI_rCQh7sxoIEhuS93YVZjI_KpAWGQPr735intwys.png",
+      "date": "Mar 4, 2026",
+      "snippet": "As we previously reported, three U.S. Air Force F-15E Strike Eagle aircraft have been shot down in a friendly fire incident over Kuwait, with ...",
+      "snippet_highlighted_words": [
+        "three U.S. Air Force F-15E Strike Eagle aircraft have been shot down"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "As we previously reported, three U.S. Air Force F-15E Strike Eagle aircraft have been shot down in a friendly fire incident over Kuwait, with ...",
+          "source_info_link": "https://theaviationist.com/2026/03/04/kuwaiti-f-a-18-f-15e-friendly-fire/",
+          "icon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/lwjI_rCQh7sxoIEhuS93YUpe-zwghLMgrSr9L2cg3dBllx2k2cIBo2BWfsfemqUx.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://theaviationist.com/2026/03/04/kuwaiti-f-a-18-f-15e-friendly-fire/&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Ftheaviationist.com%2F2026%2F03%2F04%2Fkuwaiti-f-a-18-f-15e-friendly-fire%2F",
+      "source": "The Aviationist"
+    },
+    {
+      "position": 8,
+      "title": "Kuwaiti F/A-18 pilot didn't follow the IFF procedure or ...",
+      "link": "https://www.globaldefensecorp.com/2026/03/05/kuwaiti-f-a-18-pilot-didnt-follow-the-iff-procedure-or-didnt-turn-on-the-iff-transponder/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.globaldefensecorp.com/2026/03/05/kuwaiti-f-a-18-pilot-didnt-follow-the-iff-procedure-or-didnt-turn-on-the-iff-transponder/&ved=2ahUKEwiCl_mrrpuTAxVe_8kDHRiNIo8QFnoFCLYDEAE",
+      "displayed_link": "https://www.globaldefensecorp.com \u203a Middle East",
+      "favicon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/YphNCFIdJ6x7MMLD-uKlDU5jWzLGiuB0ke7sXOqiqfI.png",
+      "date": "8 days ago",
+      "snippet": "Three US fighter jets, all of them F-15E Strike Eagles, were mistakenly downed in Kuwait \u2013 not Iran \u2013 by friendly Kuwaiti fire on Monday, ...",
+      "snippet_highlighted_words": [
+        "Three US fighter jets, all of them F-15E Strike Eagles"
+      ],
+      "about_this_result": {
+        "source": {
+          "description": "Three US fighter jets, all of them F-15E Strike Eagles, were mistakenly downed in Kuwait \u2013 not Iran \u2013 by friendly Kuwaiti fire on Monday, ...",
+          "source_info_link": "https://www.globaldefensecorp.com/2026/03/05/kuwaiti-f-a-18-pilot-didnt-follow-the-iff-procedure-or-didnt-turn-on-the-iff-transponder/",
+          "icon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/YphNCFIdJ6x7MMLD-uKlDRVE3RmuEraXNTNkZESoaSsV6HbUWdEnJ_iFO663fkq7.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.globaldefensecorp.com/2026/03/05/kuwaiti-f-a-18-pilot-didnt-follow-the-iff-procedure-or-didnt-turn-on-the-iff-transponder/&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.globaldefensecorp.com%2F2026%2F03%2F05%2Fkuwaiti-f-a-18-pilot-didnt-follow-the-iff-procedure-or-didnt-turn-on-the-iff-transponder%2F",
+      "source": "Global Defense Corp"
+    },
+    {
+      "position": 9,
+      "title": "A Kuwaiti F/A-18 fighter jet was reported to be responsible ...",
+      "link": "https://www.threads.com/@protossw/post/DVcmu98Gq9s/a-kuwaiti-f-a-fighter-jet-was-reported-to-be-responsible-for-shooting-down-usaf",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.threads.com/%40protossw/post/DVcmu98Gq9s/a-kuwaiti-f-a-fighter-jet-was-reported-to-be-responsible-for-shooting-down-usaf&ved=2ahUKEwiCl_mrrpuTAxVe_8kDHRiNIo8QFnoFCLsDEAE",
+      "displayed_link": "https://www.threads.com \u203a @protossw",
+      "favicon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/aDcDKfGVyBNmlcPr9tlWX-Wx8hNwtNfidSTL6MDJiaM.png",
+      "date": "Mar 3, 2026",
+      "snippet": "A Kuwaiti F/A-18 fighter jet was reported to be responsible for shooting down 3 #USAF F-15E Strike Eagles over Kuwait on Sunday.",
+      "about_this_result": {
+        "source": {
+          "description": "A Kuwaiti F/A-18 fighter jet was reported to be responsible for shooting down 3 #USAF F-15E Strike Eagles over Kuwait on Sunday.",
+          "source_info_link": "https://www.threads.com/@protossw/post/DVcmu98Gq9s/a-kuwaiti-f-a-fighter-jet-was-reported-to-be-responsible-for-shooting-down-usaf",
+          "icon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/aDcDKfGVyBNmlcPr9tlWX8CvhT7v3c7oslQ6awxqMr1EC4XvBfvmDzSmMsZQ6TIo.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.threads.com/@protossw/post/DVcmu98Gq9s/a-kuwaiti-f-a-fighter-jet-was-reported-to-be-responsible-for-shooting-down-usaf&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.threads.com%2F%40protossw%2Fpost%2FDVcmu98Gq9s%2Fa-kuwaiti-f-a-fighter-jet-was-reported-to-be-responsible-for-shooting-down-usaf",
+      "source": "Threads"
+    },
+    {
+      "position": 10,
+      "title": "F/A-18F Super Hornet - Royal Australian Air Force",
+      "link": "https://www.airforce.gov.au/aircraft/18f-super-hornet",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.airforce.gov.au/aircraft/18f-super-hornet&ved=2ahUKEwiCl_mrrpuTAxVe_8kDHRiNIo8QFnoFCLMDEAE",
+      "displayed_link": "https://www.airforce.gov.au \u203a aircraft",
+      "favicon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/dmF-xlY8sjmdu96-bD990k4Up2iUwsaftZD4KBAo06s.png",
+      "snippet": "The F/A-18F Super Hornet's increased wing area allows it to carry more mounted devices on its additional hardpoints.",
+      "about_this_result": {
+        "source": {
+          "description": "The F/A-18F Super Hornet's increased wing area allows it to carry more mounted devices on its additional hardpoints.",
+          "source_info_link": "https://www.airforce.gov.au/aircraft/18f-super-hornet",
+          "icon": "https://serpapi.com/searches/69b337bfe171b9e7d8890c64/images/dmF-xlY8sjmdu96-bD990hBzja1KXbqU2cuqyKpxh9hKVODVJF4pTT9-FOfyXmQT.png"
+        },
+        "languages": [
+          "en"
+        ],
+        "regions": [
+          "US"
+        ]
+      },
+      "about_page_link": "https://www.google.com/search?q=About+https://www.airforce.gov.au/aircraft/18f-super-hornet&tbm=ilp",
+      "about_page_serpapi_link": "https://serpapi.com/search.json?engine=google_about_this_result&google_domain=google.com&q=About+https%3A%2F%2Fwww.airforce.gov.au%2Faircraft%2F18f-super-hornet",
+      "source": "airforce.gov.au"
+    }
+  ]
+}

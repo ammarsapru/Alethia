@@ -58,7 +58,7 @@ def bk_analysis(result):
 # This only runs if you execute this file directly (e.g., python aonAnalysis.py)
 if __name__ == "__main__":
     # Path to your test data file
-    test_data_path = 'backend/routers/data.json'
+    test_data_path = 'backend/routers/testDataforAON.json'
     
     print(f"Attempting to load test data from: {os.path.abspath(test_data_path)}")
     

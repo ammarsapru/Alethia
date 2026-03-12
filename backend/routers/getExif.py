@@ -77,10 +77,20 @@ def handle_exif(filepath):
 
 
         if not exif_info:
-            print("No EXIF data to process.")
+            print("No EXIF data to process. Returning basic info with placeholders.")
             return {
                 "Format": image_format,
                 "Size": file_size_bytes,
+                "Model": "UNKNOWN",
+                "Make": "GENERIC",
+                "Software": "N/A",
+                "Exposure": "N/A",
+                "Focal Length": "N/A",
+                "DateTime Original": "N/A",
+                "ISO": "N/A",
+                "Image Width": "N/A",
+                "Image Height": "N/A",
+                "GPS Location": "No GPS Data",
             }
 
         if exif_info:
@@ -158,6 +168,8 @@ def handle_exif(filepath):
                         gps_display = str(gps_coordinates)
                 else:
                     gps_display = str(gps_coordinates)
+            print(f"Formatted GPS Location: {gps_display}")
+
             exifData = {
                 "GPS Location": gps_display,
                 "Model": model,

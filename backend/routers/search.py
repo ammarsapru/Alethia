@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from fastapi.responses import JSONResponse
 from typing import List
-import os, uuid, requests
+import os, uuid, requests, time
 from pathlib import Path
 from datetime import datetime
 from .handle_serp import handle_serp_response
@@ -9,7 +9,9 @@ from routers.upload import upload_image_to_cloudinary
 from routers.getExif import handle_exif
 from .aon.aiOrNot import AIorNot_image_analysis
 from .genai_analysis import generate_comprehensive_report
-
+from .cloudVision.webDetectionLS import detect_web
+import json
+# from serpapi import GoogleSearch
 SERP_KEY = os.getenv("SERP_API_KEY")
 
 if not SERP_KEY:
@@ -40,10 +42,14 @@ async def search_image(file: UploadFile = File(...)):
         content = await file.read()
         f.write(content)
 
+    print(f"called the detect_web function to call the google cloud vision.")
+    detect_web(file_path)  # Call Cloud Vision for web detection (optional, can be removed if not needed)
+    #call cloud vision for testing purposes
+
     # Upload to Cloudinary and get public URL
     public_url = upload_image_to_cloudinary(file_path)
     print(f"Public Image URL: {public_url}")
-
+#-------------------------serp api call
     # Call SerpAPI
     params = {
         "engine": "google_reverse_image",
@@ -51,14 +57,47 @@ async def search_image(file: UploadFile = File(...)):
         "api_key": SERP_KEY,
     }
 
+    params_for_lens = {
+        "engine": "google_lens",
+        "url": public_url,
+        "api_key": SERP_KEY,
+    }
+
+    print("made first call to serp api reverse image search")
     # Increased timeout to 60 seconds to prevent ReadTimeout errors
     r = requests.get("https://serpapi.com/search", params=params, timeout=60)
     if r.status_code != 200:
-        raise HTTPException(status_code=502, detail="SerpAPI failed")
+        print(f"SerpAPI Error: {r.status_code} - {r.text}")
+        raise HTTPException(status_code=502, detail=f"SerpAPI failed: {r.text}")
+    
+    # Wait briefly to avoid rate limits
+    time.sleep(2)
+    
+    print("made second call to serp api for lens data")
+    r_lens = requests.get("https://serpapi.com/search", params=params_for_lens, timeout=60)
+    if r_lens.status_code != 200:
+        print(f"SerpAPI Lens Error: {r_lens.status_code} - {r_lens.text}")
+        raise HTTPException(status_code=502, detail=f"SerpAPI Lens failed: {r_lens.text}")
+    lens_data = r_lens.json()
+    with open("lens_response.json", "w") as f:
+        f.write(json.dumps(lens_data, indent=2))
+    print("Response saved to lens_response.json")
 
     data = r.json()
-    print(data)
+    # data_json = type(dict).to_json(data)
+    with open("serpresponse.json", "w") as f:
+        f.write(json.dumps(data, indent=2))
+    print("Response saved to serpresponse.json")
+
+    # Debug: Print keys and full data to see what we're getting
+    print(f"SerpAPI Results Keys: {data.keys()}")
+    if "error" in data:
+        print(f"SerpAPI Error: {data['error']}")
     
+    # Check for results specifically in expected keys
+    found_any_results = any(k in data for k in ['image_results', 'organic_results', 'visual_matches', 'reverse_image_search'])
+    print(f"Found search results? {found_any_results}")
+#--------------------------
     # Initialize with defaults to prevent frontend issues
     processed_data = {
         "image_description": "No description available.",
@@ -66,7 +105,7 @@ async def search_image(file: UploadFile = File(...)):
         "source_clusters": {}
     }
     exif_data = {}
-
+#sends serp api response ahead
     try:
         # This likely calls the legacy describe_image.py
         serp_result = handle_serp_response(data, file_path)
@@ -76,9 +115,15 @@ async def search_image(file: UploadFile = File(...)):
         print(f"Error processing SERP/Wayback response: {e}")
 
     try:
-        exif_data = handle_exif(file_path)
+        print(f"Calling handle_exif for: {file_path}")
+        ex_data = handle_exif(file_path)
+        if ex_data:
+            exif_data = ex_data
+            print(f"Exif extraction successful. Keys found: {list(exif_data.keys())}")
+        else:
+            print("handle_exif returned None or empty.")
     except Exception as e:
-        print(f"Error processing EXIF: {e}")
+        print(f"CRITICAL ERROR in handle_exif: {e}")
 
     ai_analysis = {}
     try:
@@ -89,6 +134,9 @@ async def search_image(file: UploadFile = File(...)):
         print(f"Error processing AI detection: {e}")
         
     organic_results = data.get("organic_results", [])
+    print("---------------------------------")
+    print(f"organic results:- {organic_results}")
+    print(f"Number of organic results: {len(organic_results)}")
     total_matches = data.get("search_information", {}).get("total_results", 0)
 
     # Fix: If API reports 0 total results but we have organic results, use the count of organic results
