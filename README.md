@@ -35,4 +35,4 @@ graph TD
     Report --> NextJS
 ```
 Will publish the site on github pages soon. If you wish to run it locally you can download the zip although you will need to create/use your own api keys I will have documentation on which keys to use and how to get them soon.
-#### **contact:** ammarsaboor115@gmail.com
+#### **Contact:** ammarsaboor115@gmail.com
