@@ -16,6 +16,7 @@ NOTE: Currently the AI or NOT is purposefully ignored in the pipeline while cons
 Workflow - User inputs images, they recieve the following:
 Number of matches found related to the image, the bias split of a pie chart shedding some light on the bias of the sources using the image, the earliest date found via archives or other means, a source list, a metadata extaction summary, geolocation via exif coordinates (Shifting slowly to a 8 - 10B locally produced model for geolocation of images) a breakdown of the likelihood of the images being AI genereted or not.
 
+```mermaid
 graph TD
     User([User: Image Input]) --> NextJS[Next.js Frontend]
     NextJS --> FastAPI[FastAPI Backend]
@@ -31,4 +32,5 @@ graph TD
     Analysis_Engine --> Gemini[Gemini 2.5 Flash]
     Gemini --> Report[Consolidated Investigative Report]
     Report --> NextJS
+```
 
